@@ -33,7 +33,7 @@ If you are confused, please refer to [example-1](example/example-1/) for a clear
 ## Components
 
 <details open>
-<summary>Available</summary>
+<summary>Pending</summary>
 
 - [ ] Button
 - [ ] Radio Button
