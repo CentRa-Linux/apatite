@@ -8,4 +8,4 @@ CONFIG += c++11
 SOURCES += main.cpp
 RESOURCES += qml.qrc
 
-include(../../SnowWhite/SnowWhite.pri)
+include(../../Apatite/Apatite.pri)
