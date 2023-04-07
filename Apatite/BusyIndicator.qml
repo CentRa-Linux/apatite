@@ -1,48 +1,81 @@
 import QtQuick 2.15
 import QtQuick.Templates 2.15 as T
+import org.kde.kirigami 2.15 as Kirigami
+import Apatite 1.0
 
 T.BusyIndicator {
     id: control
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                                implicitContentWidth + leftPadding + rightPadding)
+                            implicitContentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
+
+    SystemPalette {
+        id: systemPalette
+        colorGroup: control.enabled ? control.active ? activeSystemPalette.colorGroup : inactiveSystemPalette.colorGroup : disabledSystemPalette.colorGroup
+    }
 
     visible: running
     running: false
     padding: 6
 
-    contentItem: ShaderEffect {
-        id: effect
+    contentItem: Rectangle {
+        id: transparent
+        color: "transparent"
+        Rectangle {
+            id: effect
+            opacity: 1
+            color: Kirigami.Theme.highlightColor
+            anchors.centerIn: parent
+            height: 4
+            width: 20
+            radius: 4
+        }
+        Rectangle {
+            id: shadow1
+            opacity: 0.5
+            color: Kirigami.Theme.highlightColor
+            anchors.centerIn: parent
+            height: 4
+            width: 20
+            rotation: effect.rotation
+            radius: 4
 
-        property real strokeWidth: 0.06
-        property real sweepAngle: .5
-        property color color: control.palette.button
+            Behavior on rotation {
+                NumberAnimation {
+                    duration: Kirigami.Units.longDuration
+                    easing.type: Easing.OutQuad
+                }
+            }
+        }
+        Rectangle {
+            id: shadow2
+            opacity: 0.3
+            color: Kirigami.Theme.highlightColor
+            anchors.centerIn: parent
+            height: 4
+            width: 20
+            rotation: effect.rotation
+            radius: 4
 
-        fragmentShader: "
-            varying highp vec2 qt_TexCoord0;
-            uniform highp float qt_Opacity;
-            uniform highp float sweepAngle;
-            uniform highp float strokeWidth;
-            uniform highp float width;
-            uniform highp vec4 color;
-
-            void main() {
-                highp vec2 coord = qt_TexCoord0 - vec2(0.5);
-                highp float ring = smoothstep(0.0, 0.5/width, -abs(length(coord) - 0.5 + strokeWidth) + strokeWidth);
-                gl_FragColor = color * ring;
-                gl_FragColor *= smoothstep(0.0, 0.5/width, -atan(coord.x, coord.y) / 6.2831 - 0.48 + sweepAngle);
-            }"
+            Behavior on rotation {
+                NumberAnimation {
+                    duration: Kirigami.Units.veryLongDuration
+                    easing.type: Easing.OutQuad
+                }
+            }
+        }
     }
 
     Timer {
         property real seed: 0
         running: control.running
-        repeat: true; interval: 25 // Almost 40Hz
+        repeat: true
+        interval: 25
         onTriggered: {
-            effect.rotation += 8
-            effect.sweepAngle = 0.5 + Math.sin(seed+=0.05) / 3
+            effect.rotation += (Math.sin(seed += 0.1) + 1) / Math.PI * 10 + 2
         }
     }
+    Component.onCompleted: print(control.enabled)
 }

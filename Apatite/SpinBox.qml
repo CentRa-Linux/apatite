@@ -71,7 +71,7 @@ T.SpinBox {
             anchors.verticalCenter: parent.verticalCenter
             ShapePath {
                 strokeWidth: 2
-                strokeColor: systemPalette.text
+                strokeColor: upbutton.enabled ? systemPalette.text : disabledSystemPalette.text
                 capStyle: ShapePath.RoundCap
                 fillColor: "transparent"
                 startX: upbutton.height / 2
@@ -108,7 +108,7 @@ T.SpinBox {
             anchors.verticalCenter: parent.verticalCenter
             ShapePath {
                 strokeWidth: 2
-                strokeColor: systemPalette.text
+                strokeColor: downbutton.enabled ? systemPalette.text : disabledSystemPalette.text
                 capStyle: ShapePath.RoundCap
                 fillColor: "transparent"
                 startX: upbutton.width * 1.5 / 5

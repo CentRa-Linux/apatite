@@ -111,7 +111,7 @@ T.Button {
 
         border.width: 1
         border.color: mouseArea.containsMouse
-                      || control.down ? p ? Kirigami.Theme.highlightColor : bordercolor : control.flat ? "transparent" : bordercolor
+                      || control.down ? p ? systemPalette.highlight : bordercolor : control.flat ? "transparent" : bordercolor
 
         Behavior on border.color {
             ColorAnimation {

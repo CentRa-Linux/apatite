@@ -63,7 +63,7 @@ ApplicationWindow {
             icon.width: 64
             icon.height: 64
             width: 160
-            height: 50
+            height: 150
             highlighted: true
         }
         Button {
@@ -96,15 +96,47 @@ ApplicationWindow {
             text: "Linux大好きボタン"
             enabled: true
         }
-        SpinBox {}
+        SpinBox {
+            editable: true
+        }
         Slider {}
         RangeSlider {}
         Column {
             RadioButton {
-                text: "are"
+                text: "Linux"
             }
             RadioButton {
-                text: "are"
+                text: "FreeBSD"
+            }
+            RadioButton {
+                text: "Windows"
+                enabled: false
+            }
+        }
+        ComboBox {
+            model: ["First", "Second", "Third"]
+        }
+
+        Rectangle {
+            width: 85
+            height: 85
+            color: 'transparent'
+            radius: 6
+            border.width: 1
+            border.color: Qt.darker(window.palette.base, 1.1)
+
+            BusyIndicator {
+                enabled: true
+                anchors.centerIn: parent
+                width: 30
+                height: 30
+                running: false
+                visible: true
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: parent.running ^= true
+                }
             }
         }
     }
