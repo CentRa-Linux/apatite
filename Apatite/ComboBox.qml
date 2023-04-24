@@ -13,7 +13,7 @@ T.ComboBox {
 
     SystemPalette {
         id: systemPalette
-        colorGroup: control.enabled ? activeSystemPalette.colorGroup : disabledSystemPalette.colorGroup
+        colorGroup: control.enabled ? SystemPalette.Active : SystemPalette.Disabled
     }
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
@@ -219,7 +219,7 @@ T.ComboBox {
     }
 
     popup: T.Popup {
-        y: control.height + 2
+        y: visible ? control.height + 2 : 0
         topPadding: 0
         width: control.width
         height: Math.min(contentItem.implicitHeight,
@@ -241,6 +241,5 @@ T.ComboBox {
                                          systemPalette.buttonText, 0.7)
             color: systemPalette.window
         }
-        onYChanged: print(control.y + " " + y)
     }
 }

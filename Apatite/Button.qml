@@ -12,7 +12,7 @@ T.Button {
 
     SystemPalette {
         id: systemPalette
-        colorGroup: control.enabled ? control.active ? activeSystemPalette.colorGroup : inactiveSystemPalette.colorGroup : disabledSystemPalette.colorGroup
+        colorGroup: control.enabled ? control.active ? SystemPalette.Active : SystemPalette.Inactive : SystemPalette.Disabled
     }
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
@@ -51,6 +51,7 @@ T.Button {
             verticalItemAlignment: Grid.AlignVCenter
 
             Kirigami.Icon {
+                id: icon
                 visible: control.display != AbstractButton.TextOnly
                 source: control.icon.name
                 implicitHeight: control.icon.height
@@ -58,10 +59,19 @@ T.Button {
             }
 
             Text {
+                id: text
                 visible: control.display != AbstractButton.IconOnly
-                text: control.text
+                text: textMetrics.elidedText
                 font: control.font
                 color: systemPalette.buttonText
+            }
+
+            TextMetrics {
+                id: textMetrics
+                font: text.font
+                text: control.text
+                elide: Qt.ElideRight
+                elideWidth: control.display == AbstractButton.TextUnderIcon ? control.width - Kirigami.Units.largeSpacing * 2 : control.width - Kirigami.Units.largeSpacing * 4 - icon.width
             }
         }
     }
@@ -180,5 +190,11 @@ T.Button {
                 easing.type: Easing.OutQuad
             }
         }
+    }
+    Rectangle {
+        id: area
+        anchors.fill: background
+        color: "red"
+        visible: false
     }
 }

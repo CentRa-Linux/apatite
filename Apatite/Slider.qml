@@ -18,7 +18,7 @@ T.Slider {
 
     SystemPalette {
         id: systemPalette
-        colorGroup: control.enabled ? activeSystemPalette.colorGroup : disabledSystemPalette.colorGroup
+        colorGroup: control.enabled ? SystemPalette.Active : SystemPalette.Disabled
     }
 
     handle: Rectangle {
@@ -26,27 +26,39 @@ T.Slider {
         y: control.topPadding
            + (control.horizontal ? (control.availableHeight - height) / 2 : control.visualPosition
                                    * (control.availableHeight - height))
-
-        radius: height / 2
-        border.width: 1
-        border.color: control.hovered ? systemPalette.highlight : Apatite.pblend(
-                                            systemPalette.button,
-                                            systemPalette.buttonText, 0.7)
-        color: control.hovered ? Apatite.pblend(systemPalette.button,
-                                                systemPalette.highlight,
-                                                0.8) : systemPalette.button
         implicitWidth: 16
         implicitHeight: 16
-        Behavior on border.color {
-            ColorAnimation {
-                duration: Kirigami.Units.longDuration
-                easing.type: Easing.OutQuad
+        color: "transparent"
+        Rectangle {
+            anchors.fill: parent
+            anchors.margins: control.pressed ? 2 : 0
+
+            radius: height / 2
+            border.width: 1
+            border.color: control.hovered ? systemPalette.highlight : Apatite.pblend(
+                                                systemPalette.button,
+                                                systemPalette.buttonText, 0.7)
+            color: control.hovered ? Apatite.pblend(systemPalette.button,
+                                                    systemPalette.highlight,
+                                                    0.8) : systemPalette.button
+            Behavior on border.color {
+                ColorAnimation {
+                    duration: Kirigami.Units.longDuration
+                    easing.type: Easing.OutQuad
+                }
             }
-        }
-        Behavior on color {
-            ColorAnimation {
-                duration: Kirigami.Units.longDuration
-                easing.type: Easing.OutQuad
+            Behavior on color {
+                ColorAnimation {
+                    duration: Kirigami.Units.longDuration
+                    easing.type: Easing.OutQuad
+                }
+            }
+
+            Behavior on anchors.margins {
+                NumberAnimation {
+                    duration: Kirigami.Units.longDuration
+                    easing.type: Easing.OutQuad
+                }
             }
         }
     }
@@ -80,7 +92,7 @@ T.Slider {
             border.width: 1
             border.color: systemPalette.highlight
 
-            width: control.visualPosition * (parent.width)
+            width: control.leftPadding + (control.horizontal ? control.visualPosition * (control.availableWidth - 16) : (control.availableWidth - 16) / 2) + 8
 
             color: Apatite.pblend(systemPalette.button,
                                   systemPalette.highlight, 0.8)

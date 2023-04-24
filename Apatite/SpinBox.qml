@@ -13,7 +13,7 @@ T.SpinBox {
 
     SystemPalette {
         id: systemPalette
-        colorGroup: control.enabled ? activeSystemPalette.colorGroup : disabledSystemPalette.colorGroup
+        colorGroup: control.enabled ? SystemPalette.Active : SystemPalette.Disabled
     }
 
     implicitWidth: Math.max(

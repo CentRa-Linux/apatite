@@ -57,7 +57,7 @@ ApplicationWindow {
             enabled: false
         }
         Button {
-            text: "Minix最高！"
+            text: "Minix最高！！！！！！！！！！！！！！！！！！"
             display: AbstractButton.TextUnderIcon
             icon.name: "folder-open"
             icon.width: 64
@@ -85,7 +85,7 @@ ApplicationWindow {
         TextField {
             width: 200
             placeholderText: "検索..."
-            source: "search"
+            //source: "search"
         }
         TextArea {
             width: 200
@@ -138,6 +138,11 @@ ApplicationWindow {
                     onClicked: parent.running ^= true
                 }
             }
+        }
+        Dial {
+            x: (parent.width - width) / 2
+            width: 100
+            height: 100
         }
     }
 }

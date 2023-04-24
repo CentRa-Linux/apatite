@@ -22,48 +22,66 @@ T.RangeSlider {
 
     SystemPalette {
         id: systemPalette
-        colorGroup: control.enabled ? activeSystemPalette.colorGroup : disabledSystemPalette.colorGroup
+        colorGroup: control.enabled ? SystemPalette.Active : SystemPalette.Disabled
     }
 
     component Handler: Rectangle {
         property real vpos: 0
+        property real margins: 0
+        property bool hovered: false
         x: control.leftPadding
            + (control.horizontal ? vpos * (control.availableWidth
                                            - width) : (control.availableWidth - width) / 2)
         y: control.topPadding
            + (control.horizontal ? (control.availableHeight - height) / 2 : vpos
                                    * (control.availableHeight - height))
-
-        radius: height / 2
-        border.width: 1
-        border.color: control.hovered ? systemPalette.highlight : Apatite.pblend(
-                                            systemPalette.button,
-                                            systemPalette.buttonText, 0.7)
-        color: control.hovered ? Apatite.pblend(systemPalette.button,
-                                                systemPalette.highlight,
-                                                0.8) : systemPalette.button
         implicitWidth: 16
         implicitHeight: 16
-        Behavior on border.color {
-            ColorAnimation {
-                duration: Kirigami.Units.longDuration
-                easing.type: Easing.OutQuad
+        color: "transparent"
+        Rectangle {
+            anchors.fill: parent
+            anchors.margins: parent.margins
+
+            radius: height / 2
+            border.width: 1
+            border.color: hovered ? systemPalette.highlight : Apatite.pblend(
+                                        systemPalette.button,
+                                        systemPalette.buttonText, 0.7)
+            color: hovered ? Apatite.pblend(systemPalette.button,
+                                            systemPalette.highlight,
+                                            0.8) : systemPalette.button
+            Behavior on border.color {
+                ColorAnimation {
+                    duration: Kirigami.Units.longDuration
+                    easing.type: Easing.OutQuad
+                }
             }
-        }
-        Behavior on color {
-            ColorAnimation {
-                duration: Kirigami.Units.longDuration
-                easing.type: Easing.OutQuad
+            Behavior on color {
+                ColorAnimation {
+                    duration: Kirigami.Units.longDuration
+                    easing.type: Easing.OutQuad
+                }
+            }
+
+            Behavior on anchors.margins {
+                NumberAnimation {
+                    duration: Kirigami.Units.longDuration
+                    easing.type: Easing.OutQuad
+                }
             }
         }
     }
 
     first.handle: Handler {
         vpos: control.first.visualPosition
+        margins: control.first.pressed ? 2 : 0
+        hovered: control.first.hovered
     }
 
     second.handle: Handler {
         vpos: control.second.visualPosition
+        margins: control.second.pressed ? 2 : 0
+        hovered: control.second.hovered
     }
 
     background: Rectangle {
@@ -85,7 +103,7 @@ T.RangeSlider {
         color: systemPalette.window
 
         Rectangle {
-            x: control.first.visualPosition * (parent.width)
+            x: control.first.handle.x
             anchors.verticalCenter: parent.verticalCenter
 
             implicitWidth: 20
@@ -95,7 +113,7 @@ T.RangeSlider {
             border.width: 1
             border.color: systemPalette.highlight
 
-            width: (control.second.visualPosition - control.first.visualPosition) * (parent.width)
+            width: control.second.handle.x - control.first.handle.x
 
             color: Apatite.pblend(systemPalette.button,
                                   systemPalette.highlight, 0.8)

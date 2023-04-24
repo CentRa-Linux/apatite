@@ -16,7 +16,7 @@ T.Frame {
 
     SystemPalette {
         id: systemPalette
-        colorGroup: control.enabled ? activeSystemPalette.colorGroup : disabledSystemPalette.colorGroup
+        colorGroup: control.enabled ? SystemPalette.Active : SystemPalette.Disabled
     }
 
     padding: 6

@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/Apatite">
-        <file>base/DashedRing.qml</file>
         <file>Button.qml</file>
         <file>CheckBox.qml</file>
         <file>Label.qml</file>

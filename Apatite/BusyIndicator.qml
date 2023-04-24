@@ -13,7 +13,7 @@ T.BusyIndicator {
 
     SystemPalette {
         id: systemPalette
-        colorGroup: control.enabled ? control.active ? activeSystemPalette.colorGroup : inactiveSystemPalette.colorGroup : disabledSystemPalette.colorGroup
+        colorGroup: control.enabled ? SystemPalette.Active : SystemPalette.Disabled
     }
 
     visible: running
