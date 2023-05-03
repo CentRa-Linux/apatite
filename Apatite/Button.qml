@@ -26,6 +26,7 @@ T.Button {
 
     padding: 6
     spacing: 6
+    checkable: false
 
     icon.width: 24
     icon.height: 24
@@ -34,9 +35,11 @@ T.Button {
     display: AbstractButton.TextOnly
 
     hoverEnabled: true
+    highlighted: checkable ? checked : false
 
     contentItem: Item {
         Grid {
+            id: grid
             anchors.centerIn: parent
             spacing: control.display == AbstractButton.TextOnly
                      || control.display == AbstractButton.IconOnly ? 0 : control.spacing
@@ -50,9 +53,18 @@ T.Button {
             horizontalItemAlignment: Grid.AlignHCenter
             verticalItemAlignment: Grid.AlignVCenter
 
+            height: control.display == AbstractButton.TextUnderIcon ? icon.valid
+                                                                      && icon.visible ? icon.height + text.height + control.spacing : text.height : Math.max(icon.height, text.height)
+            width: control.display
+                   == AbstractButton.TextUnderIcon ? Math.max(
+                                                         icon.width,
+                                                         text.width) : icon.valid
+                                                     && icon.visible ? icon.width + text.width + control.spacing : text.width
+
             Kirigami.Icon {
                 id: icon
                 visible: control.display != AbstractButton.TextOnly
+                anchors.centerIn: control.display == AbstractButton.IconOnly ? parent : null
                 source: control.icon.name
                 implicitHeight: control.icon.height
                 implicitWidth: control.icon.width
@@ -196,5 +208,11 @@ T.Button {
         anchors.fill: background
         color: "red"
         visible: false
+    }
+
+    onClicked: {
+        if (checkable == true) {
+            checked = !checked
+        }
     }
 }

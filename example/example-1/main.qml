@@ -10,7 +10,7 @@ ApplicationWindow {
     id: window
 
     width: 800
-    height: 420
+    height: 1080
     visible: true
 
     SystemPalette {
@@ -140,7 +140,17 @@ ApplicationWindow {
             }
         }
         Dial {
-            x: (parent.width - width) / 2
+            width: 100
+            height: 100
+        }
+        Label {
+            text: "Are you ready?"
+        }
+        Button {
+            text: checked ? "もちろん！！" : "フリーソフトウェアは好き？"
+            checkable: true
+            display: AbstractButton.IconOnly
+            icon.name: "firefox"
             width: 100
             height: 100
         }

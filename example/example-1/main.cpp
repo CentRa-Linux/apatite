@@ -8,8 +8,8 @@ int main(int argc, char *argv[]) {
 #endif
   QGuiApplication app(argc, argv);
 
-  app.setOrganizationName("smr");
-  app.setOrganizationDomain("smr");
+  app.setOrganizationName("centra");
+  app.setOrganizationDomain("centra");
   app.setApplicationName("example-1");
   QSurfaceFormat fmt;
   fmt.setSamples(4);
